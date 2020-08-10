@@ -80,12 +80,14 @@ public class UmsAdminService {
     public String login(String username, String password) {
 
         UserDetails userDetails = null;
+
         try {
-             userDetails = userDetailsService.loadUserByUsername(username);
+            userDetails = userDetailsService.loadUserByUsername(username);
         } catch (UsernameNotFoundException e) {
             e.printStackTrace();
             return null;
         }
+
         //如果密码匹配 生成token
         if(passwordEncoder.matches(password,userDetails.getPassword())){
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());

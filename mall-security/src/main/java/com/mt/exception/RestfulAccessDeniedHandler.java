@@ -7,6 +7,7 @@ package com.mt.exception;
  */
 
 import cn.hutool.json.JSONUtil;
+import com.mt.api.CommonResult;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
@@ -35,7 +36,8 @@ public class RestfulAccessDeniedHandler implements AccessDeniedHandler {
 
         System.out.println("对不起您无权访问"+e.getMessage());
 
-        response.getWriter().println(JSONUtil.parse("{'message':'对比起,您无权访问!'}"));
+        //返回 json
+        response.getWriter().println(JSONUtil.parse(CommonResult.forbidden(e.getMessage())));
         response.getWriter().flush();
     }
 

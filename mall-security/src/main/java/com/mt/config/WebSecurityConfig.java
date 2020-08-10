@@ -1,9 +1,14 @@
 package com.mt.config;
 
 import com.mt.details.AdminUserDetailsService;
+import com.mt.dynamic.DynamicAccessDecisionManager;
+import com.mt.dynamic.DynamicSecurityFilter;
+import com.mt.dynamic.DynamicSecurityMetadataSource;
+import com.mt.dynamic.DynamicSecurityService;
 import com.mt.exception.RestAuthenticationEntryPoint;
 import com.mt.exception.RestfulAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +21,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Arrays;
@@ -45,6 +51,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
 
+    @Autowired(required = false)
+    private DynamicSecurityService dynamicSecurityService;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -69,6 +77,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(restfulAccessDeniedHandler)
                 .authenticationEntryPoint(restAuthenticationEntryPoint);
 
+
+        if(dynamicSecurityService!=null){
+            http.addFilterBefore(dynamicSecurityFilter(),FilterSecurityInterceptor.class);
+        }
+
+
     }
 
 
@@ -77,6 +91,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
+
+
+    //为了动态权限验证  当注入了 dynamicSecurityService 才执行
+    @ConditionalOnBean(name = "dynamicSecurityService")
+    @Bean
+    public DynamicAccessDecisionManager dynamicAccessDecisionManager() {
+        return new DynamicAccessDecisionManager();
+    }
+
+
+    @ConditionalOnBean(name = "dynamicSecurityService")
+    @Bean
+    public DynamicSecurityFilter dynamicSecurityFilter() {
+        return new DynamicSecurityFilter();
+    }
+
+    @ConditionalOnBean(name = "dynamicSecurityService")
+    @Bean
+    public DynamicSecurityMetadataSource dynamicSecurityMetadataSource() {
+        return new DynamicSecurityMetadataSource();
+    }
 
 
 }

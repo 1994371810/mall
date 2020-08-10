@@ -1,6 +1,7 @@
 package com.mt.exception;
 
 import cn.hutool.json.JSONUtil;
+import com.mt.api.CommonResult;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,10 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         System.out.println("请登录");
-        response.getWriter().println( JSONUtil.parse("{msg:'登陆信息无效或已过期,请重新登陆!'}"));
+
+        //返回json
+        response.getWriter().println(JSONUtil.parse(CommonResult.unauthorized(authException.getMessage())));
+
         response.getWriter().flush();
     }
 

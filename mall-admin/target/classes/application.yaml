@@ -11,10 +11,11 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+
 security:
   ignoreUrl:
-    - /login
-    - /regist
+    - /admin/login
+    - /admin/regist
   token-header-name: token
-  expiration: 3600
+  expiration: 86400 #24??
   secret-key: '%ewri#$s1~r~`3(w3@'

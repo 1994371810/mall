@@ -1,4 +1,4 @@
-package com.mt.config;
+package com.mt.config.security;
 
 import cn.hutool.core.util.StrUtil;
 import com.mt.bean.UmsAdmin;
@@ -41,7 +41,6 @@ public class AdminUserDetail implements UserDetails {
 
         //两个权限合并
         resourceAuthorities.addAll(permissionAuthorities);
-        System.out.println("用户拥有的权限==>"+resourceAuthorities);
         //返回
         return resourceAuthorities;
     }

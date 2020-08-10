@@ -1,4 +1,4 @@
-package com.mt.config;
+package com.mt.config.security;
 
 import com.mt.bean.UmsAdmin;
 import com.mt.bean.UmsPermission;
@@ -16,13 +16,16 @@ import java.util.List;
 public class AdminUserDetailServiceImpl implements AdminUserDetailsService {
     @Autowired
     private UmsAdminService umsAdminService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println("loadUserByUsername==>");
 
         UmsAdmin umsAdmin = umsAdminService.findUserByUserName(username);
          if(umsAdmin==null){
              throw new UsernameNotFoundException("用户不存在");
          }
+
         List<UmsResource> userResource = umsAdminService.getUserResource(umsAdmin.getId());
         List<UmsPermission> userPermission = umsAdminService.getUserPermission(umsAdmin.getId());
 
