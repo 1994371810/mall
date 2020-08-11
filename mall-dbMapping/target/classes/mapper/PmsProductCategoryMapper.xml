@@ -2,10 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mt.mapper.PmsProductCategoryMapper">
 
-    <resultMap id="mapWithChildren" type="com.mt.bean.PmsProductCategory">
-        <id property="id" column="id"></id>
-        <result property="name" column="name"></result>
-        
+    <resultMap id="mapWithChildren" type="com.mt.bean.PmsProductCategory" extends="childrenMap">
         <collection property="children" columnPrefix="child_"
         resultMap="childrenMap"
         ></collection>
