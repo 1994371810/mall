@@ -1,12 +1,15 @@
 package com.mt.component;
 
+import com.mt.api.CommonResult;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -16,7 +19,7 @@ import java.lang.reflect.Parameter;
  *
  * @author 郭俊旺
  */
-
+@Component
 @Aspect
 public class BindingResultConfig {
 
@@ -24,13 +27,25 @@ public class BindingResultConfig {
     public void controllerPointCut(){};
 
     @Around("controllerPointCut()")
-    public void around(ProceedingJoinPoint proceedingJoinPoint){
+    public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
         Object[] args = proceedingJoinPoint.getArgs();
-        for(Object argument : args){
-            
-        }
 
+        for(Object argument : args){
+
+            if(argument instanceof BindingResult){
+
+                BindingResult result = (BindingResult) argument;
+
+                //如果bindingResult内有异常 说明校验失败
+                if(result.hasFieldErrors()){
+                    FieldError fieldError = result.getFieldError();
+                    //返回检验信息
+                    return CommonResult.validateFailed(fieldError.getDefaultMessage());
+                }
+            }
+        }
+        return proceedingJoinPoint.proceed();
     }
 
 }

@@ -34,7 +34,7 @@ public class RestfulAccessDeniedHandler implements AccessDeniedHandler {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
 
-        System.out.println("对不起您无权访问"+e.getMessage());
+        System.out.println("对不起您无权访问__"+e.getMessage());
 
         //返回 json
         response.getWriter().println(JSONUtil.parse(CommonResult.forbidden(e.getMessage())));

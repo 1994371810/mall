@@ -17,8 +17,6 @@ public class Test1 {
 
     @Test
     public  void test(){
-        List<UmsResource> allResource = umsAdminMapper.getAllResource();
-        System.out.println(allResource);
 
     }
 }

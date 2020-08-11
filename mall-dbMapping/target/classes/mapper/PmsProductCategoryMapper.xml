@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mt.mapper.PmsProductCategoryMapper">
-    
+
+    <resultMap id="mapWithChildren" type="com.mt.bean.PmsProductCategory">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        
+        <collection property="children" columnPrefix="child_"
+        resultMap="childrenMap"
+        ></collection>
+    </resultMap>
+
+    <resultMap id="childrenMap" type="com.mt.bean.PmsProductCategory">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+    </resultMap>
+
+    <select id="listWithChildren" resultMap="mapWithChildren">
+        select
+            c1.id,
+            c1.name,
+            c2.id   child_id,
+            c2.name child_name
+        from pms_product_category c1 left join pms_product_category c2 on c1.id = c2.parent_id
+        where c1.parent_id = 0
+    </select>
+
 
 </mapper>

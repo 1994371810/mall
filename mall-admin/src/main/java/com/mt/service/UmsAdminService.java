@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mt.bean.UmsAdmin;
 import com.mt.bean.UmsPermission;
 import com.mt.bean.UmsResource;
+import com.mt.bean.UmsRole;
 import com.mt.config.JwtTokenFilter;
 import com.mt.mapper.UmsAdminMapper;
 import com.mt.util.JwtTokenUtil;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -98,4 +100,14 @@ public class UmsAdminService {
         return null;
     }
 
+
+    /**
+     * 获取用户所拥有的角色
+     * @param adminId 管理员id
+     * @return {@link List<UmsRole>}
+     */
+    public List<UmsRole> getRoleList(Long adminId) {
+        List<UmsRole> roles = umsAdminMapper.getRoles(adminId);
+        return roles == null ? new ArrayList<>() : roles;
+    }
 }

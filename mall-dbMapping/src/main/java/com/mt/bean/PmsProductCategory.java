@@ -1,11 +1,13 @@
 package com.mt.bean;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 产品分类(PmsProductCategory)实体类
@@ -16,6 +18,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 @Accessors(chain = true)
 public class PmsProductCategory implements Serializable {
     private static final long serialVersionUID = -33431299882734419L;
@@ -56,6 +59,8 @@ public class PmsProductCategory implements Serializable {
     */
     private String description;
 
+    @TableField(exist = false)
+    private List<PmsProductCategory> children;
 
 
 }

@@ -53,10 +53,21 @@
 
     </select>
 
-    <select id="getAllResource" resultType="com.mt.bean.UmsResource">
-         SELECT
-            id,create_time,name,url,description,category_id
-        FROM ums_resource
+
+
+
+    <select id="getRoles" resultType="com.mt.bean.UmsRole">
+        select
+        ur.id,
+        ur.name,
+        ur.description,
+        ur.admin_count,
+        ur.create_time,
+        ur.status,
+        ur.sort
+        from ums_admin_role_relation arr
+        inner join ums_role ur on ur.id = arr.role_id
+        where arr.admin_id = 1
     </select>
 
 

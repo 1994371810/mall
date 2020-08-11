@@ -17,6 +17,7 @@ public class AdminUserDetailServiceImpl implements AdminUserDetailsService {
     @Autowired
     private UmsAdminService umsAdminService;
 
+    /***加缓存*/
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("loadUserByUsername==>");

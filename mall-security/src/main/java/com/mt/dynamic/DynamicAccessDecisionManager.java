@@ -27,10 +27,10 @@ public class DynamicAccessDecisionManager implements AccessDecisionManager {
         if(collection == null || collection.isEmpty()){
             return;
         }
-
+        //通过需要的权限与 用户拥有的权限对比
         for(ConfigAttribute attr : collection){
             for (GrantedAuthority authority : authentication.getAuthorities()) {
-                if(authentication.getAuthorities().equals(attr.getAttribute())){
+                if(authority.getAuthority().equals(attr.getAttribute())){
                     //如果匹配上了则放行
                     return ;
                 }
