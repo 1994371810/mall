@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mt.dao.PmsProductAttributeCategoryDao">
+
+
+
+    <resultMap id="mapWithAttr" type="com.mt.dto.PmsProductAttributeCategoryItem">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <collection property="productAttributeList" columnPrefix="attr_"  resultMap="mapAttr">
+        </collection>
+    </resultMap>
+
+    <resultMap id="mapAttr" type="com.mt.bean.PmsProductAttribute">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+    </resultMap>
+
+
+    <select id="selectWithAttr" resultMap="mapWithAttr">
+        select
+        pac.id,
+        pac.name,
+        pa.id 'attr_id',
+        pa.name 'attr_name'
+        from pms_product_attribute_category pac
+        inner join pms_product_attribute  pa on pac.id = pa.product_attribute_category_id
+        where pa.type = 1
+    </select>
+
+</mapper>

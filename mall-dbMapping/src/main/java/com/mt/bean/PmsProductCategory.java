@@ -1,6 +1,8 @@
 package com.mt.bean;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +24,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class PmsProductCategory implements Serializable {
     private static final long serialVersionUID = -33431299882734419L;
-    
+    @TableId(type = IdType.AUTO)
     private Long id;
         /**
     * 上机分类的编号：0表示一级分类

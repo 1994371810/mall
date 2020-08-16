@@ -12,4 +12,5 @@ import com.mt.bean.PmsProductAttributeCategory;
  */
 public interface PmsProductAttributeCategoryMapper extends BaseMapper<PmsProductAttributeCategory> {
 
+    String getListWithAttr();
 }
