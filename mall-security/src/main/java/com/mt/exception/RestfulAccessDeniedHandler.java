@@ -25,6 +25,8 @@ import java.io.IOException;
 @Component
 public class RestfulAccessDeniedHandler implements AccessDeniedHandler {
 
+
+    /**没有权限时的处理*/
     @Override
     public void handle(HttpServletRequest request,
                        HttpServletResponse response,

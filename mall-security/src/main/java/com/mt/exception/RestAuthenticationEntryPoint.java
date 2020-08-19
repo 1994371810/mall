@@ -18,6 +18,8 @@ import java.io.IOException;
  */
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+    /**认证失败处理*/
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         response.setHeader("Access-Control-Allow-Origin", "*");
