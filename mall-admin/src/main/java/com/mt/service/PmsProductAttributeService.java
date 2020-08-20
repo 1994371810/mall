@@ -1,5 +1,8 @@
 package com.mt.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.mt.bean.PmsProductAttribute;
 import com.mt.bean.PmsProductCategory;
 import com.mt.bean.PmsProductCategoryAttributeRelation;
 import com.mt.dao.PmsProductAttributeDao;
@@ -21,4 +24,17 @@ public class PmsProductAttributeService {
     }
 
 
+    /**
+     * 通过分类id获取商品参数列表
+     * @param categoryId 类别id
+     * @return {@link List<PmsProductAttribute>}
+     */
+    public List<PmsProductAttribute> getAttributeByCategoryId(Long categoryId, Integer type, Integer pageNum,Integer pageSize) {
+        QueryWrapper qw = new QueryWrapper();
+        qw.eq("product_attribute_category_id",categoryId);
+        qw.eq("type",type);
+
+        PageHelper.startPage(pageNum,pageSize);
+        return attributeDao.selectList(qw);
+    }
 }
